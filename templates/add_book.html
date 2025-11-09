@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="form-card">
+    <h2>➕ Add a New Book</h2>
+    <form method="post" class="form">
+        <label>Title:</label>
+        <input type="text" name="title" required>
+        <label>Author:</label>
+        <input type="text" name="author" required>
+        <label>Year:</label>
+        <input type="number" name="year" required>
+        <label>Image URL:</label>
+        <input type="text" name="image" required>
+        <button type="submit" class="btn">Add Book</button>
+    </form>
+</div>
+{% endblock %}

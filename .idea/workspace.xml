@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+<<<<<<< HEAD
+    <list default="true" id="4bfa557d-969a-4081-a50b-a7169f47af6b" name="Changes" comment="&quot;Added new book form and update index page&quot;" />
+=======
+    <list default="true" id="4bfa557d-969a-4081-a50b-a7169f47af6b" name="Changes" comment="&quot;Flask app now stores books in SQLite DB&quot;" />
+>>>>>>> 49373ee2409b83df189452427f964a254f45a20f
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+<<<<<<< HEAD
+    <option name="PUSH_AUTO_UPDATE" value="true" />
+=======
+>>>>>>> 49373ee2409b83df189452427f964a254f45a20f
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="311AsxH3bK3eud0DF8XCxcLARWm" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+<<<<<<< HEAD
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.app.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/sanik/OneDrive/Book-management&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  }
+}</component>
+=======
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.app.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/sanik/OneDrive/Book-management",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
+  }
+}]]></component>
+>>>>>>> 49373ee2409b83df189452427f964a254f45a20f
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-9f8e2b94138c-36ea0e71a18c-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.26094.141" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4bfa557d-969a-4081-a50b-a7169f47af6b" name="Changes" comment="" />
+      <created>1754681415307</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1754681415307</updated>
+    </task>
+    <task id="LOCAL-00001" summary="&quot;Flask app now stores books in SQLite DB&quot;">
+      <option name="closed" value="true" />
+      <created>1754849087613</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1754849087613</updated>
+    </task>
+    <task id="LOCAL-00002" summary="&quot;Flask app now stores books in SQLite DB&quot;">
+      <option name="closed" value="true" />
+      <created>1754849119404</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1754849119405</updated>
+    </task>
+    <task id="LOCAL-00003" summary="&quot;Flask app now stores books in SQLite DB&quot;">
+      <option name="closed" value="true" />
+      <created>1754849352266</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1754849352266</updated>
+    </task>
+<<<<<<< HEAD
+    <task id="LOCAL-00004" summary="&quot;Flask app now stores books in SQLite DB&quot;">
+      <option name="closed" value="true" />
+      <created>1754849453554</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1754849453554</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Book Management project">
+      <option name="closed" value="true" />
+      <created>1754853558756</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1754853558756</updated>
+    </task>
+    <task id="LOCAL-00006" summary="&quot;Added new book form and update index page&quot;">
+      <option name="closed" value="true" />
+      <created>1757203871212</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1757203871212</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+=======
+    <option name="localTasksCounter" value="4" />
+>>>>>>> 49373ee2409b83df189452427f964a254f45a20f
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="&quot;Flask app now stores books in SQLite DB&quot;" />
+<<<<<<< HEAD
+    <MESSAGE value="Book Management project" />
+    <MESSAGE value="&quot;Added new book form and update index page&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;Added new book form and update index page&quot;" />
+=======
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;Flask app now stores books in SQLite DB&quot;" />
+>>>>>>> 49373ee2409b83df189452427f964a254f45a20f
+  </component>
+</project>

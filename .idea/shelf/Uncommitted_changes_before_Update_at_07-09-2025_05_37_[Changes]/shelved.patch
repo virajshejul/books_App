@@ -1,0 +1,1237 @@
+Index: templates/index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html>\r\n<head>\r\n    <title>My Book Library</title>\r\n    <link rel=\"stylesheet\" href=\"{{ url_for('static', filename='style.css') }}\">\r\n</head>\r\n<body>\r\n\r\n<header>\r\n    <h1>\uD83D\uDCDA My Book Library</h1>\r\n    <nav>\r\n        <a href=\"{{ url_for('index') }}\">Home</a>\r\n        <a href=\"{{ url_for('add_book_form') }}\">Add Book</a>\r\n    </nav>\r\n</header>\r\n\r\n<section class=\"hero\">\r\n    <h2>Discover Your Next Favorite Book</h2>\r\n    <p>Browse through your collection and add more anytime.</p>\r\n</section>\r\n\r\n<section class=\"book-list\">\r\n    {% for book in books %}\r\n    <div class=\"book-card\">\r\n        <img src=\"{{ book.image }}\" alt=\"{{ book.title }}\">\r\n        <h3>{{ book.title }}</h3>\r\n        <p>by {{ book.author }} ({{ book.year }})</p>\r\n        <a href=\"{{ url_for('book_detail', book_id=book.id) }}\" class=\"btn\">View Details</a>\r\n        <form action=\"{{ url_for('delete_book', book_id=book.id) }}\" method=\"post\">\r\n            <button type=\"submit\" class=\"delete-btn\">Delete</button>\r\n        </form>\r\n    </div>\r\n    {% endfor %}\r\n</section>\r\n\r\n<footer>\r\n    <p>© 2025 My Book Library | Made with ❤\uFE0F</p>\r\n</footer>\r\n\r\n</body>\r\n</html>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/templates/index.html b/templates/index.html
+--- a/templates/index.html	(revision a354069f13cad50cb69d29fde518667e0cc0fce9)
++++ b/templates/index.html	(date 1757119909408)
+@@ -1,41 +1,26 @@
+-<!DOCTYPE html>
+-<html>
+-<head>
+-    <title>My Book Library</title>
+-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+-</head>
+-<body>
++{% extends "base.html" %}
+ 
+-<header>
+-    <h1>📚 My Book Library</h1>
+-    <nav>
+-        <a href="{{ url_for('index') }}">Home</a>
+-        <a href="{{ url_for('add_book_form') }}">Add Book</a>
+-    </nav>
+-</header>
++{% block content %}
+ 
+-<section class="hero">
+-    <h2>Discover Your Next Favorite Book</h2>
+-    <p>Browse through your collection and add more anytime.</p>
+-</section>
++<!-- Home Banner -->
++<div class="home-banner">
++    <img src="{{ url_for('static', filename='image/main-banner1.jpeg') }}" alt="Book Library Banner">
++</div>
+ 
+-<section class="book-list">
++<h2 class="section-title">Available Books</h2>
++
++<section class="books-list">
+     {% for book in books %}
+-    <div class="book-card">
+-        <img src="{{ book.image }}" alt="{{ book.title }}">
+-        <h3>{{ book.title }}</h3>
+-        <p>by {{ book.author }} ({{ book.year }})</p>
+-        <a href="{{ url_for('book_detail', book_id=book.id) }}" class="btn">View Details</a>
+-        <form action="{{ url_for('delete_book', book_id=book.id) }}" method="post">
+-            <button type="submit" class="delete-btn">Delete</button>
+-        </form>
+-    </div>
++        <div class="book-item">
++            <img src="{{ book[4] }}" alt="{{ book[1] }}">
++            <h3><a href="{{ url_for('book_detail', book_id=book[0]) }}">{{ book[1] }}</a></h3>
++            <p><strong>Author:</strong> {{ book[2] }}</p>
++            <p><strong>Year:</strong> {{ book[3] }}</p>
++            <p><strong>Added by:</strong> {{ book[5] }}</p>
++        </div>
++    {% else %}
++        <p>No books available.</p>
+     {% endfor %}
+ </section>
+ 
+-<footer>
+-    <p>© 2025 My Book Library | Made with ❤️</p>
+-</footer>
+-
+-</body>
+-</html>
++{% endblock %}
+Index: templates/add_book.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html>\r\n<head>\r\n    <title>Add Book</title>\r\n    <link rel=\"stylesheet\" href=\"{{ url_for('static', filename='style.css') }}\">\r\n</head>\r\n<body>\r\n\r\n<header>\r\n    <h1>Add a New Book</h1>\r\n    <nav>\r\n        <a href=\"{{ url_for('index') }}\">Home</a>\r\n    </nav>\r\n</header>\r\n\r\n<section class=\"form-section\">\r\n    <form action=\"{{ url_for('add_book_submit') }}\" method=\"post\">\r\n        <label>Title:</label>\r\n        <input type=\"text\" name=\"title\" required>\r\n\r\n        <label>Author:</label>\r\n        <input type=\"text\" name=\"author\" required>\r\n\r\n        <label>Year:</label>\r\n        <input type=\"number\" name=\"year\" required>\r\n\r\n        <label>Image URL:</label>\r\n        <input type=\"text\" name=\"image\" required>\r\n\r\n        <button type=\"submit\">Add Book</button>\r\n    </form>\r\n</section>\r\n\r\n<footer>\r\n    <p>© 2025 My Book Library</p>\r\n</footer>\r\n\r\n</body>\r\n</html>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/templates/add_book.html b/templates/add_book.html
+--- a/templates/add_book.html	(revision a354069f13cad50cb69d29fde518667e0cc0fce9)
++++ b/templates/add_book.html	(date 1757120531673)
+@@ -1,39 +1,31 @@
+-<!DOCTYPE html>
+-<html>
+-<head>
+-    <title>Add Book</title>
+-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+-</head>
+-<body>
+-
+-<header>
+-    <h1>Add a New Book</h1>
+-    <nav>
+-        <a href="{{ url_for('index') }}">Home</a>
+-    </nav>
+-</header>
+-
+-<section class="form-section">
+-    <form action="{{ url_for('add_book_submit') }}" method="post">
+-        <label>Title:</label>
+-        <input type="text" name="title" required>
+-
+-        <label>Author:</label>
+-        <input type="text" name="author" required>
++{% extends "base.html" %}
+ 
+-        <label>Year:</label>
+-        <input type="number" name="year" required>
++{% block content %}
++<h2>Add a New Book</h2>
+ 
+-        <label>Image URL:</label>
+-        <input type="text" name="image" required>
+-
+-        <button type="submit">Add Book</button>
+-    </form>
+-</section>
+-
+-<footer>
+-    <p>© 2025 My Book Library</p>
+-</footer>
+-
+-</body>
+-</html>
++<form method="post" class="form-table">
++    <table>
++        <tr>
++            <td><label>Title:</label></td>
++            <td><input type="text" name="title" required></td>
++        </tr>
++        <tr>
++            <td><label>Author:</label></td>
++            <td><input type="text" name="author" required></td>
++        </tr>
++        <tr>
++            <td><label>Year:</label></td>
++            <td><input type="number" name="year" required></td>
++        </tr>
++        <tr>
++            <td><label>Image URL:</label></td>
++            <td><input type="text" name="image_url" required></td>
++        </tr>
++        <tr>
++            <td colspan="2" style="text-align:center;">
++                <button type="submit">Add Book</button>
++            </td>
++        </tr>
++    </table>
++</form>
++{% endblock %}
+Index: templates/edit_book.html
+===================================================================
+diff --git a/templates/edit_book.html b/templates/edit_book.html
+deleted file mode 100644
+--- a/templates/edit_book.html	(revision a354069f13cad50cb69d29fde518667e0cc0fce9)
++++ /dev/null	(revision a354069f13cad50cb69d29fde518667e0cc0fce9)
+@@ -1,17 +0,0 @@
+-<!DOCTYPE html>
+-<html>
+-<head>
+-    <title>Edit {{ book.title }}</title>
+-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+-</head>
+-<body>
+-    <h1>✏ Edit Book</h1>
+-    <form action="/edit-book/{{ book.id }}/submit" method="POST">
+-        <input type="text" name="title" value="{{ book.title }}" required>
+-        <input type="text" name="author" value="{{ book.author }}" required>
+-        <textarea name="description" required>{{ book.description }}</textarea>
+-        <input type="url" name="image" value="{{ book.image }}" required>
+-        <button type="submit">Save Changes</button>
+-    </form>
+-</body>
+-</html>
+Index: database.db
+===================================================================
+diff --git a/database.db b/database.db
+deleted file mode 100644
+--- a/database.db	(revision a354069f13cad50cb69d29fde518667e0cc0fce9)
++++ /dev/null	(revision a354069f13cad50cb69d29fde518667e0cc0fce9)
+@@ -1,10 +0,0 @@
+-SQLite format 3   @                                                                     .�)
+-   � ��                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      P++Ytablesqlite_sequencesqlite_sequenceCREATE TABLE sqlite_sequence(name,seq)��itablebooksbooksCREATE TABLE books (
+-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+-                title TEXT NOT NULL,
+-                author TEXT NOT NULL,
+-                year INTEGER NOT NULL,
+-                image TEXT NOT NULL
+-            )
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+\ No newline at end of file
+Index: templates/edit.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/templates/edit.html b/templates/edit.html
+new file mode 100644
+--- /dev/null	(date 1754885454333)
++++ b/templates/edit.html	(date 1754885454333)
+@@ -0,0 +1,98 @@
++<!DOCTYPE html>
++<html>
++<head>
++    <title>Edit {{ book.title }}</title>
++    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
++    <style>
++        body {
++            font-family: Arial, sans-serif;
++            background-color: #f8f9fa;
++            margin: 0;
++            padding: 0;
++        }
++        header {
++            background: #007bff;
++            color: white;
++            padding: 15px 20px;
++            display: flex;
++            justify-content: space-between;
++            align-items: center;
++        }
++        header h1 { margin: 0; }
++        nav a {
++            color: white;
++            margin-left: 15px;
++            text-decoration: none;
++        }
++        nav a:hover { text-decoration: underline; }
++        .form-container {
++            max-width: 500px;
++            margin: 30px auto;
++            background: white;
++            padding: 20px;
++            border-radius: 8px;
++            box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
++        }
++        label {
++            font-weight: bold;
++            margin-top: 10px;
++            display: block;
++        }
++        input, textarea {
++            width: 100%;
++            padding: 10px;
++            margin-top: 5px;
++            border-radius: 5px;
++            border: 1px solid #ccc;
++        }
++        textarea { min-height: 100px; }
++        button {
++            margin-top: 15px;
++            padding: 10px 15px;
++            background: #ffc107;
++            border: none;
++            color: white;
++            border-radius: 5px;
++            cursor: pointer;
++        }
++        button:hover { background: #e0a800; }
++    </style>
++</head>
++<body>
++
++<header>
++    <h1>✏ Edit Book</h1>
++    <nav>
++        <a href="{{ url_for('index') }}">Home</a>
++        {% if 'user_id' in session %}
++            <a href="{{ url_for('logout') }}">Logout ({{ session.username }})</a>
++        {% else %}
++            <a href="{{ url_for('login') }}">Login</a>
++        {% endif %}
++    </nav>
++</header>
++
++<div class="form-container">
++    <form action="/edit-book/{{ book.id }}/submit" method="POST">
++        <label>Title:</label>
++        <input type="text" name="title" value="{{ book.title }}" required>
++
++        <label>Author:</label>
++        <input type="text" name="author" value="{{ book.author }}" required>
++
++        <label>Description:</label>
++        <textarea name="description" required>{{ book.description }}</textarea>
++
++        <label>Image URL:</label>
++        <input type="url" name="image" value="{{ book.image }}" required>
++
++        <button type="submit">Save Changes</button>
++    </form>
++</div>
++
++<footer style="text-align:center; padding:15px; background:#f1f1f1; margin-top:20px;">
++    <p>© 2025 My Book Library</p>
++</footer>
++
++</body>
++</html>
+Index: templates/cart.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/templates/cart.html b/templates/cart.html
+new file mode 100644
+--- /dev/null	(date 1755222735332)
++++ b/templates/cart.html	(date 1755222735332)
+@@ -0,0 +1,26 @@
++{% extends 'base.html' %}
++
++{% block content %}
++<h1>Your Cart</h1>
++{% if items %}
++<table>
++    <tr>
++        <th>Book</th>
++        <th>Price</th>
++        <th>Quantity</th>
++        <th>Total</th>
++    </tr>
++    {% for item in items %}
++    <tr>
++        <td>{{ item.title }}</td>
++        <td>₹{{ "%.2f"|format(item.price) }}</td>
++        <td>{{ item.quantity }}</td>
++        <td>₹{{ "%.2f"|format(item.price * item.quantity) }}</td>
++    </tr>
++    {% endfor %}
++</table>
++<h3>Grand Total: ₹{{ "%.2f"|format(total) }}</h3>
++{% else %}
++<p>Your cart is empty.</p>
++{% endif %}
++{% endblock %}
+Index: app.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from flask import Flask, render_template, request, redirect, url_for\r\nimport sqlite3\r\n\r\nDATABASE = 'database.db'\r\napp = Flask(__name__)\r\n\r\n# -------------------------\r\n# Database setup\r\n# -------------------------\r\ndef init_db():\r\n    with sqlite3.connect(DATABASE) as conn:\r\n        conn.execute(\r\n            \"\"\"\r\n            CREATE TABLE IF NOT EXISTS books (\r\n                id INTEGER PRIMARY KEY AUTOINCREMENT,\r\n                title TEXT NOT NULL,\r\n                author TEXT NOT NULL,\r\n                year INTEGER NOT NULL,\r\n                image TEXT NOT NULL\r\n            )\r\n            \"\"\"\r\n        )\r\n        conn.commit()\r\n\r\ndef get_db_connection():\r\n    conn = sqlite3.connect(DATABASE)\r\n    conn.row_factory = sqlite3.Row\r\n    return conn\r\n\r\ndef get_all_books():\r\n    conn = get_db_connection()\r\n    books_list = conn.execute(\"SELECT * FROM books ORDER BY id\").fetchall()\r\n    conn.close()\r\n    return books_list\r\n\r\n# -------------------------\r\n# Routes\r\n# -------------------------\r\n@app.route(\"/\")\r\ndef index():\r\n    books = get_all_books()\r\n    return render_template(\"index.html\", books=books)\r\n\r\n@app.route('/add-book')\r\ndef add_book_form():\r\n    return render_template('add_book.html')\r\n\r\n@app.route('/add-book/submit', methods=['POST'])\r\ndef add_book_submit():\r\n    title = request.form.get('title')\r\n    author = request.form.get('author')\r\n    year = request.form.get('year')\r\n    image = request.form.get('image')\r\n\r\n    if not (title and author and year and image):\r\n        return \"Please fill out all fields\"\r\n\r\n    try:\r\n        year = int(year)\r\n    except ValueError:\r\n        return \"Invalid year\"\r\n\r\n    conn = get_db_connection()\r\n    conn.execute(\r\n        \"INSERT INTO books (title, author, year, image) VALUES (?, ?, ?, ?)\",\r\n        (title, author, year, image)\r\n    )\r\n    conn.commit()\r\n    conn.close()\r\n    return redirect(url_for('index'))\r\n\r\n@app.route(\"/delete/<int:book_id>\", methods=[\"POST\"])\r\ndef delete_book(book_id):\r\n    conn = get_db_connection()\r\n    conn.execute(\"DELETE FROM books WHERE id = ?\", (book_id,))\r\n    conn.commit()\r\n    conn.close()\r\n    return redirect(url_for('index'))\r\n\r\n@app.route(\"/book_detail/<int:book_id>\")\r\ndef book_detail(book_id):\r\n    conn = get_db_connection()\r\n    book = conn.execute(\"SELECT * FROM books WHERE id = ?\", (book_id,)).fetchone()\r\n    conn.close()\r\n    if book:\r\n        return render_template(\"book_detail.html\", book=book)\r\n    else:\r\n        return render_template(\"404.html\"), 404\r\n\r\n@app.errorhandler(404)\r\ndef page_not_found(error):\r\n    return render_template(\"404.html\", error=error), 404\r\n\r\n# -------------------------\r\n# Main\r\n# -------------------------\r\nif __name__ == \"__main__\":\r\n    init_db()\r\n    app.run(debug=True)\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app.py b/app.py
+--- a/app.py	(revision a354069f13cad50cb69d29fde518667e0cc0fce9)
++++ b/app.py	(date 1755223343879)
+@@ -1,99 +1,117 @@
+-from flask import Flask, render_template, request, redirect, url_for
++from flask import Flask, render_template, request, redirect, url_for, session, flash
+ import sqlite3
++import os
+ 
+-DATABASE = 'database.db'
+ app = Flask(__name__)
++app.secret_key = "mysecretkey"
+ 
+-# -------------------------
+-# Database setup
+-# -------------------------
++DB_NAME = "books.db"
++
+ def init_db():
+-    with sqlite3.connect(DATABASE) as conn:
+-        conn.execute(
+-            """
+-            CREATE TABLE IF NOT EXISTS books (
+-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+-                title TEXT NOT NULL,
+-                author TEXT NOT NULL,
+-                year INTEGER NOT NULL,
+-                image TEXT NOT NULL
+-            )
+-            """
+-        )
+-        conn.commit()
++    if not os.path.exists(DB_NAME):
++        with sqlite3.connect(DB_NAME) as conn:
++            c = conn.cursor()
++            # Users
++            c.execute('''CREATE TABLE users (
++                            id INTEGER PRIMARY KEY AUTOINCREMENT,
++                            username TEXT UNIQUE,
++                            password TEXT)''')
++            # Books ट
++            c.execute('''CREATE TABLE books (
++                            id INTEGER PRIMARY KEY AUTOINCREMENT,
++                            title TEXT,
++                            author TEXT,
++                            year INTEGER,
++                            image_url TEXT,
++                            added_by INTEGER,
++                            FOREIGN KEY (added_by) REFERENCES users(id))''')
++        print("Database created with tables.")
+ 
+-def get_db_connection():
+-    conn = sqlite3.connect(DATABASE)
+-    conn.row_factory = sqlite3.Row
+-    return conn
++init_db()
+ 
+-def get_all_books():
+-    conn = get_db_connection()
+-    books_list = conn.execute("SELECT * FROM books ORDER BY id").fetchall()
+-    conn.close()
+-    return books_list
+-
+-# -------------------------
+-# Routes
+-# -------------------------
+ @app.route("/")
+ def index():
+-    books = get_all_books()
++    with sqlite3.connect(DB_NAME) as conn:
++        c = conn.cursor()
++        c.execute("""
++            SELECT books.id, books.title, books.author, books.year, books.image_url, users.username 
++            FROM books JOIN users ON books.added_by = users.id
++        """)
++        books = c.fetchall()
+     return render_template("index.html", books=books)
+ 
+-@app.route('/add-book')
+-def add_book_form():
+-    return render_template('add_book.html')
+-
+-@app.route('/add-book/submit', methods=['POST'])
+-def add_book_submit():
+-    title = request.form.get('title')
+-    author = request.form.get('author')
+-    year = request.form.get('year')
+-    image = request.form.get('image')
+-
+-    if not (title and author and year and image):
+-        return "Please fill out all fields"
+-
+-    try:
+-        year = int(year)
+-    except ValueError:
+-        return "Invalid year"
+-
+-    conn = get_db_connection()
+-    conn.execute(
+-        "INSERT INTO books (title, author, year, image) VALUES (?, ?, ?, ?)",
+-        (title, author, year, image)
+-    )
+-    conn.commit()
+-    conn.close()
+-    return redirect(url_for('index'))
++@app.route("/register", methods=["GET", "POST"])
++def register():
++    if request.method == "POST":
++        username = request.form["username"]
++        password = request.form["password"]
++        with sqlite3.connect(DB_NAME) as conn:
++            c = conn.cursor()
++            try:
++                c.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
++                conn.commit()
++                flash("Registration successful! Please login.", "success")
++                return redirect(url_for("login"))
++            except sqlite3.IntegrityError:
++                flash("Username already exists!", "danger")
++    return render_template("register.html")
++
++@app.route("/login", methods=["GET", "POST"])
++def login():
++    if request.method == "POST":
++        username = request.form["username"]
++        password = request.form["password"]
++        with sqlite3.connect(DB_NAME) as conn:
++            c = conn.cursor()
++            c.execute("SELECT id FROM users WHERE username = ? AND password = ?", (username, password))
++            user = c.fetchone()
++            if user:
++                session["user_id"] = user[0]
++                session["username"] = username
++                return redirect(url_for("index"))
++            else:
++                flash("Invalid username or password", "danger")
++    return render_template("login.html")
+ 
+-@app.route("/delete/<int:book_id>", methods=["POST"])
+-def delete_book(book_id):
+-    conn = get_db_connection()
+-    conn.execute("DELETE FROM books WHERE id = ?", (book_id,))
+-    conn.commit()
+-    conn.close()
+-    return redirect(url_for('index'))
++@app.route("/logout")
++def logout():
++    session.clear()
++    return redirect(url_for("login"))
++
++@app.route("/add", methods=["GET", "POST"])
++def add_book():
++    if "user_id" not in session:
++        return redirect(url_for("login"))
++    if request.method == "POST":
++        title = request.form["title"]
++        author = request.form["author"]
++        year = request.form["year"]
++        image_url = request.form["image_url"]
++        with sqlite3.connect(DB_NAME) as conn:
++            c = conn.cursor()
++            c.execute("INSERT INTO books (title, author, year, image_url, added_by) VALUES (?, ?, ?, ?, ?)",
++                      (title, author, year, image_url, session["user_id"]))
++            conn.commit()
++        return redirect(url_for("index"))
++    return render_template("add_book.html")
+ 
+-@app.route("/book_detail/<int:book_id>")
++@app.route("/book/<int:book_id>")
+ def book_detail(book_id):
+-    conn = get_db_connection()
+-    book = conn.execute("SELECT * FROM books WHERE id = ?", (book_id,)).fetchone()
+-    conn.close()
+-    if book:
+-        return render_template("book_detail.html", book=book)
+-    else:
++    with sqlite3.connect(DB_NAME) as conn:
++        c = conn.cursor()
++        c.execute("""
++            SELECT books.title, books.author, books.year, books.image_url, users.username
++            FROM books JOIN users ON books.added_by = users.id
++            WHERE books.id = ?
++        """, (book_id,))
++        book = c.fetchone()
++    if book is None:
+         return render_template("404.html"), 404
++    return render_template("book_detail.html", book=book)
+ 
+ @app.errorhandler(404)
+-def page_not_found(error):
+-    return render_template("404.html", error=error), 404
++def page_not_found(e):
++    return render_template('404.html'), 404
+ 
+-# -------------------------
+-# Main
+-# -------------------------
+ if __name__ == "__main__":
+-    init_db()
+     app.run(debug=True)
+Index: requirements.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/requirements.txt b/requirements.txt
+new file mode 100644
+--- /dev/null	(date 1754854329477)
++++ b/requirements.txt	(date 1754854329477)
+@@ -0,0 +1,8 @@
++blinker==1.9.0
++click==8.2.1
++colorama==0.4.6
++Flask==3.1.1
++itsdangerous==2.2.0
++Jinja2==3.1.6
++MarkupSafe==3.0.2
++Werkzeug==3.1.3
+Index: templates/book_detail.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html>\r\n<head>\r\n    <title>{{ book.title }}</title>\r\n    <link rel=\"stylesheet\" href=\"{{ url_for('static', filename='style.css') }}\">\r\n</head>\r\n<body>\r\n\r\n<header>\r\n    <h1>{{ book.title }}</h1>\r\n    <nav>\r\n        <a href=\"{{ url_for('index') }}\">Home</a>\r\n    </nav>\r\n</header>\r\n\r\n<section class=\"book-detail\">\r\n    <img src=\"{{ book.image }}\" alt=\"{{ book.title }}\">\r\n    <h2>{{ book.title }}</h2>\r\n    <p><strong>Author:</strong> {{ book.author }}</p>\r\n    <p><strong>Year:</strong> {{ book.year }}</p>\r\n</section>\r\n\r\n<footer>\r\n    <p>© 2025 My Book Library</p>\r\n</footer>\r\n\r\n</body>\r\n</html>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/templates/book_detail.html b/templates/book_detail.html
+--- a/templates/book_detail.html	(revision a354069f13cad50cb69d29fde518667e0cc0fce9)
++++ b/templates/book_detail.html	(date 1755223323888)
+@@ -1,28 +1,10 @@
+-<!DOCTYPE html>
+-<html>
+-<head>
+-    <title>{{ book.title }}</title>
+-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+-</head>
+-<body>
+-
+-<header>
+-    <h1>{{ book.title }}</h1>
+-    <nav>
+-        <a href="{{ url_for('index') }}">Home</a>
+-    </nav>
+-</header>
++{% extends "base.html" %}
+ 
+-<section class="book-detail">
+-    <img src="{{ book.image }}" alt="{{ book.title }}">
+-    <h2>{{ book.title }}</h2>
+-    <p><strong>Author:</strong> {{ book.author }}</p>
+-    <p><strong>Year:</strong> {{ book.year }}</p>
+-</section>
+-
+-<footer>
+-    <p>© 2025 My Book Library</p>
+-</footer>
+-
+-</body>
+-</html>
++{% block content %}
++<h2>{{ book[0] }}</h2>
++<img src="{{ book[3] }}" alt="{{ book[0] }}" class="book-image">
++<p><strong>Author:</strong> {{ book[1] }}</p>
++<p><strong>Year:</strong> {{ book[2] }}</p>
++<p><small>Added by: {{ book[4] }}</small></p>
++<a href="{{ url_for('index') }}">Back to Home</a>
++{% endblock %}
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"4bfa557d-969a-4081-a50b-a7169f47af6b\" name=\"Changes\" comment=\"Book Management project\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Python Script\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"PUSH_AUTO_UPDATE\" value=\"true\" />\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 1\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"311AsxH3bK3eud0DF8XCxcLARWm\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,\r\n    &quot;Python.app.executor&quot;: &quot;Run&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;master&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/sanik/OneDrive/Book-management&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;\r\n  }\r\n}</component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-python-sdk-9f8e2b94138c-36ea0e71a18c-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.26094.141\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"4bfa557d-969a-4081-a50b-a7169f47af6b\" name=\"Changes\" comment=\"\" />\r\n      <created>1754681415307</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1754681415307</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"&quot;Flask app now stores books in SQLite DB&quot;\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1754849087613</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1754849087613</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"&quot;Flask app now stores books in SQLite DB&quot;\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1754849119404</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1754849119405</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"&quot;Flask app now stores books in SQLite DB&quot;\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1754849352266</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1754849352266</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"&quot;Flask app now stores books in SQLite DB&quot;\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1754849453554</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1754849453554</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Book Management project\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1754853558756</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1754853558756</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"6\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"&quot;Flask app now stores books in SQLite DB&quot;\" />\r\n    <MESSAGE value=\"Book Management project\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Book Management project\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision a354069f13cad50cb69d29fde518667e0cc0fce9)
++++ b/.idea/workspace.xml	(date 1757107375000)
+@@ -4,7 +4,25 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="4bfa557d-969a-4081-a50b-a7169f47af6b" name="Changes" comment="Book Management project" />
++    <list default="true" id="4bfa557d-969a-4081-a50b-a7169f47af6b" name="Changes" comment="Book Management project">
++      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/templates/cart.html" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/templates/edit.html" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/templates/my_books.html" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/templates/register.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/database.db" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/static/image/hobbit.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/add_column.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/style.css" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/templates/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/404.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/templates/add_book.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/add_book.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/templates/book_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/book_detail.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/templates/edit_book.html" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -21,6 +39,18 @@
+     <option name="PUSH_AUTO_UPDATE" value="true" />
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
++  <component name="GitHubPullRequestSearchHistory">{
++  &quot;lastFilter&quot;: {
++    &quot;state&quot;: &quot;OPEN&quot;,
++    &quot;assignee&quot;: &quot;sanikamamidwar08&quot;
++  }
++}</component>
++  <component name="GithubPullRequestsUISettings">{
++  &quot;selectedUrlAndAccountId&quot;: {
++    &quot;url&quot;: &quot;https://github.com/sanikamamidwar08/Books_library_project.git&quot;,
++    &quot;accountId&quot;: &quot;d9d8dbca-adee-48c2-bc48-eb478945aa07&quot;
++  }
++}</component>
+   <component name="ProjectColorInfo">{
+   &quot;associatedIndex&quot;: 1
+ }</component>
+@@ -35,6 +65,7 @@
+   <component name="PropertiesComponent">{
+   &quot;keyToString&quot;: {
+     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
++    &quot;Python.add_column.executor&quot;: &quot;Run&quot;,
+     &quot;Python.app.executor&quot;: &quot;Run&quot;,
+     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+@@ -98,7 +129,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1754853558756</updated>
+     </task>
+-    <option name="localTasksCounter" value="6" />
++    <task id="LOCAL-00006" summary="Book Management project">
++      <option name="closed" value="true" />
++      <created>1754853582900</created>
++      <option name="number" value="00006" />
++      <option name="presentableId" value="LOCAL-00006" />
++      <option name="project" value="LOCAL" />
++      <updated>1754853582900</updated>
++    </task>
++    <option name="localTasksCounter" value="7" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+Index: templates/base.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/templates/base.html b/templates/base.html
+new file mode 100644
+--- /dev/null	(date 1757117655939)
++++ b/templates/base.html	(date 1757117655939)
+@@ -0,0 +1,35 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++    <meta charset="UTF-8">
++    <meta name="viewport" content="width=device-width, initial-scale=1.0">
++    <title>My Book Library</title>
++    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
++</head>
++<body>
++
++<header class="site-header">
++    <h1>📚 My Book Library</h1>
++    <nav class="navbar">
++        <a href="{{ url_for('index') }}">Home</a>
++
++        {% if session.get('user_id') %}
++            <a href="{{ url_for('add_book') }}">Add Book</a>
++            <a href="{{ url_for('logout') }}">Logout ({{ session.get('username') }})</a>
++        {% else %}
++            <a href="{{ url_for('login') }}">Login</a>
++            <a href="{{ url_for('register') }}">Register</a>
++        {% endif %}
++    </nav>
++</header>
++
++<main class="content">
++    {% block content %}{% endblock %}
++</main>
++
++<footer class="footer">
++    <p>&copy; 2025 My Book Library | Developed by Sanika Mamidwar</p>
++</footer>
++
++</body>
++</html>
+Index: static/style.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>body {\r\n    font-family: Arial, sans-serif;\r\n    margin: 0;\r\n    padding: 0;\r\n    background: #f8f9fa;\r\n    color: #333;\r\n}\r\n\r\nheader {\r\n    background: #343a40;\r\n    color: white;\r\n    padding: 15px;\r\n    text-align: center;\r\n}\r\n\r\nheader nav a {\r\n    color: white;\r\n    margin: 0 10px;\r\n    text-decoration: none;\r\n}\r\n\r\n.hero {\r\n    text-align: center;\r\n    padding: 20px;\r\n    background: linear-gradient(to right, #ffecd2, #fcb69f);\r\n}\r\n\r\n.book-list {\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    justify-content: center;\r\n    padding: 20px;\r\n}\r\n\r\n.book-card {\r\n    background: white;\r\n    border-radius: 8px;\r\n    box-shadow: 0 2px 8px rgba(0,0,0,0.1);\r\n    margin: 15px;\r\n    width: 200px;\r\n    padding: 10px;\r\n    text-align: center;\r\n}\r\n\r\n.book-card img {\r\n    max-width: 100%;\r\n    height: 250px;\r\n    object-fit: cover;\r\n    border-radius: 5px;\r\n}\r\n\r\n.btn, .delete-btn {\r\n    display: inline-block;\r\n    margin-top: 10px;\r\n    padding: 8px 12px;\r\n    border: none;\r\n    background: #007bff;\r\n    color: white;\r\n    cursor: pointer;\r\n    text-decoration: none;\r\n    border-radius: 5px;\r\n}\r\n\r\n.delete-btn {\r\n    background: red;\r\n}\r\n\r\n.book-detail {\r\n    text-align: center;\r\n    padding: 20px;\r\n}\r\n\r\n.form-section {\r\n    width: 300px;\r\n    margin: auto;\r\n    padding: 20px;\r\n}\r\n\r\nfooter {\r\n    background: #343a40;\r\n    color: white;\r\n    padding: 10px;\r\n    text-align: center;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/static/style.css b/static/style.css
+--- a/static/style.css	(revision a354069f13cad50cb69d29fde518667e0cc0fce9)
++++ b/static/style.css	(date 1757120583389)
+@@ -1,84 +1,150 @@
+-body {
+-    font-family: Arial, sans-serif;
+-    margin: 0;
+-    padding: 0;
+-    background: #f8f9fa;
+-    color: #333;
+-}
+-
+-header {
+-    background: #343a40;
++/* Header */
++.site-header {
++    background: #4a90e2;
+     color: white;
+     padding: 15px;
+     text-align: center;
+ }
+-
+-header nav a {
+-    color: white;
+-    margin: 0 10px;
+-    text-decoration: none;
+-}
+-
+-.hero {
++/* Home Banner */
++.home-banner {
+     text-align: center;
+-    padding: 20px;
+-    background: linear-gradient(to right, #ffecd2, #fcb69f);
+-}
+-
+-.book-list {
+-    display: flex;
+-    flex-wrap: wrap;
+-    justify-content: center;
+-    padding: 20px;
+-}
+-
+-.book-card {
+-    background: white;
+-    border-radius: 8px;
+-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+-    margin: 15px;
+-    width: 200px;
+-    padding: 10px;
+-    text-align: center;
++    margin: 20px 0;
+ }
+ 
+-.book-card img {
+-    max-width: 100%;
+-    height: 250px;
+-    object-fit: cover;
+-    border-radius: 5px;
++.site-header h1 {
++    margin: 0;
++    font-size: 28px;
+ }
+ 
+-.btn, .delete-btn {
+-    display: inline-block;
++.navbar {
+     margin-top: 10px;
+-    padding: 8px 12px;
+-    border: none;
+-    background: #007bff;
++}
++
++.navbar a {
+     color: white;
+-    cursor: pointer;
+     text-decoration: none;
+-    border-radius: 5px;
++    margin: 0 12px;
++    font-weight: bold;
++}
++
++.navbar a:hover {
++    text-decoration: underline;
+ }
+ 
+-.delete-btn {
+-    background: red;
++/* Main Content */
++.content {
++    padding: 20px;
++    min-height: 70vh;
+ }
+ 
+-.book-detail {
++/* Footer */
++.footer {
++    background: #222;
++    color: #ddd;
++    text-align: center;
++    padding: 12px;
++    position: fixed;
++    bottom: 0;
++    left: 0;
++    width: 100%;
++}
++.home-banner img {
++    width: 85%;
++    max-width: 900px;
++    border-radius: 12px;
++    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
++}
++
++/* Section Title */
++.section-title {
+     text-align: center;
++    margin: 20px 0;
++    font-size: 24px;
++    color: #333;
++}
++
++/* Book List */
++.books-list {
++    display: grid;
++    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
++    gap: 20px;
+     padding: 20px;
+ }
+ 
+-.form-section {
+-    width: 300px;
+-    margin: auto;
++.book-item {
++    background: #fff;
++    border-radius: 12px;
++    padding: 15px;
++    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
++    text-align: center;
++    transition: transform 0.2s ease-in-out;
++}
++
++.book-item:hover {
++    transform: translateY(-5px);
++}
++
++.book-item img {
++    width: 100%;
++    height: 180px;
++    object-fit: cover;
++    border-radius: 8px;
++    margin-bottom: 10px;
++}
++
++.book-item h3 {
++    margin: 10px 0;
++    font-size: 18px;
++}
++/* Add Book Form Table */
++.form-table {
++    margin: 20px auto;
++    max-width: 500px;
++    background: #fff;
+     padding: 20px;
++    border-radius: 12px;
++    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
++}
++
++.form-table table {
++    width: 100%;
++    border-collapse: collapse;
+ }
+ 
+-footer {
+-    background: #343a40;
+-    color: white;
++.form-table td {
+     padding: 10px;
+-    text-align: center;
++    vertical-align: middle;
++}
++
++.form-table label {
++    font-weight: bold;
++    color: #333;
++}
++
++.form-table input {
++    width: 95%;
++    padding: 8px;
++    border: 1px solid #ccc;
++    border-radius: 6px;
++    outline: none;
++    transition: border 0.2s ease-in-out;
++}
++
++.form-table input:focus {
++    border: 1px solid #4a90e2;
++}
++
++.form-table button {
++    background: #4a90e2;
++    color: white;
++    padding: 10px 18px;
++    border: none;
++    border-radius: 6px;
++    cursor: pointer;
++    font-weight: bold;
++    transition: background 0.2s ease-in-out;
++}
++
++.form-table button:hover {
++    background: #357ABD;
+ }
+Index: templates/register.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/templates/register.html b/templates/register.html
+new file mode 100644
+--- /dev/null	(date 1755223323899)
++++ b/templates/register.html	(date 1755223323899)
+@@ -0,0 +1,12 @@
++{% extends "base.html" %}
++
++{% block content %}
++<h2>Register</h2>
++<form method="post" class="form">
++    <label>Username:</label>
++    <input type="text" name="username" required>
++    <label>Password:</label>
++    <input type="password" name="password" required>
++    <button type="submit">Register</button>
++</form>
++{% endblock %}
+Index: templates/login.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/templates/login.html b/templates/login.html
+new file mode 100644
+--- /dev/null	(date 1755223323864)
++++ b/templates/login.html	(date 1755223323864)
+@@ -0,0 +1,12 @@
++{% extends "base.html" %}
++
++{% block content %}
++<h2>Login</h2>
++<form method="post" class="form">
++    <label>Username:</label>
++    <input type="text" name="username" required>
++    <label>Password:</label>
++    <input type="password" name="password" required>
++    <button type="submit">Login</button>
++</form>
++{% endblock %}
+Index: templates/my_books.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/templates/my_books.html b/templates/my_books.html
+new file mode 100644
+--- /dev/null	(date 1755221633405)
++++ b/templates/my_books.html	(date 1755221633405)
+@@ -0,0 +1,199 @@
++from flask import Flask, render_template, request, redirect, url_for, session, flash
++import sqlite3
++from werkzeug.security import generate_password_hash, check_password_hash
++from datetime import datetime
++import os
++
++app = Flask(__name__)
++app.secret_key = "your_secret_key_here"
++
++DB_FILE = "books.db"
++
++def get_db_connection():
++    conn = sqlite3.connect(DB_FILE)
++    conn.row_factory = sqlite3.Row
++    return conn
++
++def init_db():
++    # Create tables if not exist
++    with get_db_connection() as conn:
++        c = conn.cursor()
++        c.execute("""
++            CREATE TABLE IF NOT EXISTS users (
++                id INTEGER PRIMARY KEY AUTOINCREMENT,
++                username TEXT UNIQUE NOT NULL,
++                password_hash TEXT NOT NULL
++            )
++        """)
++        c.execute("""
++            CREATE TABLE IF NOT EXISTS books (
++                id INTEGER PRIMARY KEY AUTOINCREMENT,
++                title TEXT NOT NULL,
++                author TEXT NOT NULL,
++                description TEXT,
++                image TEXT,
++                added_by INTEGER,
++                created_at TEXT,
++                FOREIGN KEY (added_by) REFERENCES users(id)
++            )
++        """)
++        c.execute("""
++            CREATE TABLE IF NOT EXISTS purchases (
++                id INTEGER PRIMARY KEY AUTOINCREMENT,
++                user_id INTEGER NOT NULL,
++                book_id INTEGER NOT NULL,
++                purchased_at TEXT,
++                FOREIGN KEY (user_id) REFERENCES users(id),
++                FOREIGN KEY (book_id) REFERENCES books(id)
++            )
++        """)
++        conn.commit()
++
++# initialize DB once on start
++if not os.path.exists(DB_FILE):
++    init_db()
++
++# ---------------- Routes ----------------
++
++@app.route("/")
++def index():
++    conn = get_db_connection()
++    books = conn.execute("""
++        SELECT books.*, users.username as added_by_username
++        FROM books
++        LEFT JOIN users ON books.added_by = users.id
++        ORDER BY books.id DESC
++    """).fetchall()
++    conn.close()
++    return render_template("index.html", books=books)
++
++# Register
++@app.route("/register", methods=["GET", "POST"])
++def register():
++    if request.method == "POST":
++        username = request.form.get("username").strip()
++        password = request.form.get("password")
++        if not username or not password:
++            flash("Fill all fields")
++            return redirect(url_for("register"))
++        pw_hash = generate_password_hash(password)
++        conn = get_db_connection()
++        try:
++            conn.execute("INSERT INTO users (username, password_hash) VALUES (?, ?)", (username, pw_hash))
++            conn.commit()
++            flash("Registered successfully. Please login.")
++            return redirect(url_for("login"))
++        except sqlite3.IntegrityError:
++            flash("Username already taken.")
++            return redirect(url_for("register"))
++        finally:
++            conn.close()
++    return render_template("register.html")
++
++# Login
++@app.route("/login", methods=["GET", "POST"])
++def login():
++    if request.method == "POST":
++        username = request.form.get("username").strip()
++        password = request.form.get("password")
++        conn = get_db_connection()
++        user = conn.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
++        conn.close()
++        if user and check_password_hash(user["password_hash"], password):
++            session["user_id"] = user["id"]
++            session["username"] = user["username"]
++            flash("Login successful")
++            return redirect(url_for("index"))
++        else:
++            flash("Invalid credentials")
++            return redirect(url_for("login"))
++    return render_template("login.html")
++
++# Logout
++@app.route("/logout")
++def logout():
++    session.clear()
++    flash("Logged out")
++    return redirect(url_for("index"))
++
++# Add book
++@app.route("/add-book", methods=["GET", "POST"])
++def add_book():
++    if "user_id" not in session:
++        flash("Please login to add books")
++        return redirect(url_for("login"))
++    if request.method == "POST":
++        title = request.form.get("title").strip()
++        author = request.form.get("author").strip()
++        description = request.form.get("description").strip()
++        image = request.form.get("image").strip()  # URL or filename in static/images
++        now = datetime.utcnow().isoformat()
++        if not title or not author:
++            flash("Title and author are required")
++            return redirect(url_for("add_book"))
++        conn = get_db_connection()
++        conn.execute("""
++            INSERT INTO books (title, author, description, image, added_by, created_at)
++            VALUES (?, ?, ?, ?, ?, ?)
++        """, (title, author, description, image, session["user_id"], now))
++        conn.commit()
++        conn.close()
++        flash("Book added")
++        return redirect(url_for("index"))
++    return render_template("add_book.html")
++
++# Book detail
++@app.route("/book/<int:book_id>")
++def book_detail(book_id):
++    conn = get_db_connection()
++    book = conn.execute("SELECT books.*, users.username as added_by_username FROM books LEFT JOIN users ON books.added_by = users.id WHERE books.id = ?", (book_id,)).fetchone()
++    conn.close()
++    if not book:
++        return render_template("404.html"), 404
++    return render_template("book_detail.html", book=book)
++
++# Buy book
++@app.route("/buy/<int:book_id>", methods=["POST"])
++def buy(book_id):
++    if "user_id" not in session:
++        flash("Please login to buy books")
++        return redirect(url_for("login"))
++    conn = get_db_connection()
++    # optional: check if already purchased by same user
++    exists = conn.execute("SELECT * FROM purchases WHERE user_id=? AND book_id=?", (session["user_id"], book_id)).fetchone()
++    if exists:
++        flash("You already bought this book")
++        conn.close()
++        return redirect(url_for("my_books"))
++    conn.execute("INSERT INTO purchases (user_id, book_id, purchased_at) VALUES (?, ?, ?)", (session["user_id"], book_id, datetime.utcnow().isoformat()))
++    conn.commit()
++    conn.close()
++    flash("Book purchased")
++    return redirect(url_for("my_books"))
++
++# My purchased books
++@app.route("/my-books")
++def my_books():
++    if "user_id" not in session:
++        flash("Please login to view your books")
++        return redirect(url_for("login"))
++    conn = get_db_connection()
++    books = conn.execute("""
++        SELECT books.*, purchases.purchased_at
++        FROM purchases
++        JOIN books ON purchases.book_id = books.id
++        WHERE purchases.user_id = ?
++        ORDER BY purchases.id DESC
++    """, (session["user_id"],)).fetchall()
++    conn.close()
++    return render_template("my_books.html", books=books)
++
++# simple 404 page
++@app.errorhandler(404)
++def page_not_found(e):
++    return render_template("404.html"), 404
++
++if __name__ == "__main__":
++    # ensure DB exists / tables present
++    init_db()
++    app.run(debug=True)
+Index: templates/404.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html>\r\n<head>\r\n    <title>404 - Not Found</title>\r\n    <link rel=\"stylesheet\" href=\"{{ url_for('static', filename='style.css') }}\">\r\n</head>\r\n<body>\r\n    <h1>404 - Page Not Found</h1>\r\n    <a href=\"{{ url_for('index') }}\">Back to Home</a>\r\n</body>\r\n</html>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/templates/404.html b/templates/404.html
+--- a/templates/404.html	(revision a354069f13cad50cb69d29fde518667e0cc0fce9)
++++ b/templates/404.html	(date 1754888061597)
+@@ -1,11 +1,7 @@
+-<!DOCTYPE html>
+-<html>
+-<head>
+-    <title>404 - Not Found</title>
+-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+-</head>
+-<body>
+-    <h1>404 - Page Not Found</h1>
+-    <a href="{{ url_for('index') }}">Back to Home</a>
+-</body>
+-</html>
++{% extends "base.html" %}
++
++{% block content %}
++<h2>404 - Page Not Found</h2>
++<p>Sorry, the page you are looking for does not exist.</p>
++<a href="{{ url_for('index') }}">Back to Home</a>
++{% endblock %}

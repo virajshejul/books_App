@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Home Banner -->
+<div class="home-banner">
+    <img src="{{ url_for('static', filename='image/main-banner1.jpeg') }}" alt="Book Library Banner">
+    <div class="banner-text">
+        <h2>Welcome to My Book Library</h2>
+        <p>Discover and share your favorite books 📖✨</p>
+    </div>
+</div>
+
+<h2 class="section-title">Available Books</h2>
+
+<section class="books-list">
+    {% for book in books %}
+        <div class="book-item">
+            <img src="{{ book['image'] }}" alt="{{ book['title'] }}">
+            <h3><a href="{{ url_for('book_detail', book_id=book['id']) }}">{{ book['title'] }}</a></h3>
+            <p><strong>Author:</strong> {{ book['author'] }}</p>
+            <p><strong>Year:</strong> {{ book['year'] }}</p>
+            <p><strong>Added by:</strong> {{ book['added_by_name'] }}</p>
+
+            {% if session.get('user_id') == book['added_by'] %}
+            <form method="POST" action="{{ url_for('delete_book', book_id=book['id']) }}">
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
+            {% endif %}
+        </div>
+    {% else %}
+        <p>No books available.</p>
+    {% endfor %}
+</section>
+
+{% endblock %}

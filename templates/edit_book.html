@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit {{ book.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>✏ Edit Book</h1>
+    <form action="/edit-book/{{ book.id }}/submit" method="POST">
+        <input type="text" name="title" value="{{ book.title }}" required>
+        <input type="text" name="author" value="{{ book.author }}" required>
+        <textarea name="description" required>{{ book.description }}</textarea>
+        <input type="url" name="image" value="{{ book.image }}" required>
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>
