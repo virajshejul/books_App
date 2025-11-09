@@ -66,7 +66,6 @@ Open in browser:
 
 http://127.0.0.1:5000/
 
-🌐 Demo Links
 
-GitHub: Your Repo Link
-Render : https://books-library-project-qkz0.onrender.com
+
+
